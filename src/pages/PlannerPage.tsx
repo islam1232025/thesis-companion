@@ -1,45 +1,45 @@
-import { useState } from "react";
-import { BookOpen, Loader2 } from "lucide-react";
+import { useState, useRef } from "react";
+import { BookOpen, Loader2, Copy, Check } from "lucide-react";
 import { ModuleLayout } from "@/components/ModuleLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { streamAI } from "@/lib/streamAI";
 
 const PlannerPage = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const resultRef = useRef("");
+  const { toast } = useToast();
 
   const handleGenerate = async () => {
     if (!input.trim()) return;
     setLoading(true);
-    // Simulated output for now — will connect to AI later
-    setTimeout(() => {
-      setResult(`📋 خطة مذكرة: "${input}"
+    setResult("");
+    resultRef.current = "";
 
-🔹 الإشكالية المقترحة:
-كيف يمكن دراسة وتحليل "${input}" في ظل التحديات المعاصرة؟
+    await streamAI({
+      module: "planner",
+      input: input.trim(),
+      onDelta: (chunk) => {
+        resultRef.current += chunk;
+        setResult(resultRef.current);
+      },
+      onDone: () => setLoading(false),
+      onError: (msg) => {
+        setLoading(false);
+        toast({ title: "خطأ", description: msg, variant: "destructive" });
+      },
+    });
+  };
 
-🔹 الفهرس التفصيلي:
-
-الفصل الأول: الإطار النظري والمفاهيمي
-  1.1 تعريف المفاهيم الأساسية
-  1.2 الدراسات السابقة
-  1.3 النظريات المرتبطة
-
-الفصل الثاني: الإطار المنهجي
-  2.1 منهجية البحث
-  2.2 أدوات جمع البيانات
-  2.3 عينة الدراسة
-
-الفصل الثالث: الدراسة الميدانية
-  3.1 عرض النتائج
-  3.2 تحليل البيانات
-  3.3 مناقشة النتائج
-
-الخاتمة والتوصيات`);
-      setLoading(false);
-    }, 1500);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(result);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -61,10 +61,18 @@ const PlannerPage = () => {
         </Card>
 
         <Card className="p-6 opacity-0 animate-fade-up" style={{ animationDelay: "200ms" }}>
-          <label className="text-sm font-semibold text-foreground">الخطة المقترحة</label>
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-semibold text-foreground">الخطة المقترحة</label>
+            {result && (
+              <Button variant="ghost" size="sm" onClick={handleCopy}>
+                {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              </Button>
+            )}
+          </div>
           {result ? (
             <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-muted p-4 text-sm leading-7 text-foreground" dir="rtl">
               {result}
+              {loading && <span className="inline-block w-2 h-4 bg-primary animate-pulse ml-1" />}
             </pre>
           ) : (
             <div className="mt-3 flex h-[200px] items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">

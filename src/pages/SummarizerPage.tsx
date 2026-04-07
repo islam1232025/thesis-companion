@@ -1,36 +1,45 @@
-import { useState } from "react";
-import { FileSearch, Loader2 } from "lucide-react";
+import { useState, useRef } from "react";
+import { FileSearch, Loader2, Copy, Check } from "lucide-react";
 import { ModuleLayout } from "@/components/ModuleLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { streamAI } from "@/lib/streamAI";
 
 const SummarizerPage = () => {
   const [input, setInput] = useState("");
   const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const resultRef = useRef("");
+  const { toast } = useToast();
 
   const handleSummarize = async () => {
     if (!input.trim()) return;
     setLoading(true);
-    setTimeout(() => {
-      setSummary(
-`📝 الملخص:
-تم تلخيص المحتوى المدخل مع الحفاظ على الأفكار الجوهرية والبنية المنطقية للنص الأصلي.
+    setSummary("");
+    resultRef.current = "";
 
-📚 مراجع أكاديمية مقترحة:
+    await streamAI({
+      module: "summarizer",
+      input: input.trim(),
+      onDelta: (chunk) => {
+        resultRef.current += chunk;
+        setSummary(resultRef.current);
+      },
+      onDone: () => setLoading(false),
+      onError: (msg) => {
+        setLoading(false);
+        toast({ title: "خطأ", description: msg, variant: "destructive" });
+      },
+    });
+  };
 
-1. Smith, J. (2023). "Research Methodology in Social Sciences." Journal of Academic Research, 15(2), 45-62.
-   🔗 scholar.google.com
-
-2. أحمد، م. (2022). "مناهج البحث العلمي المعاصرة." مجلة العلوم الاجتماعية، 8(1)، 120-135.
-   🔗 researchgate.net
-
-3. Johnson, A. & Lee, B. (2024). "Modern Approaches to Academic Writing." Academic Press, pp. 89-112.
-   🔗 scholar.google.com`
-      );
-      setLoading(false);
-    }, 1500);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(summary);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -52,10 +61,18 @@ const SummarizerPage = () => {
         </Card>
 
         <Card className="p-6 opacity-0 animate-fade-up" style={{ animationDelay: "200ms" }}>
-          <label className="text-sm font-semibold text-foreground">الملخص والمراجع</label>
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-semibold text-foreground">الملخص والمراجع</label>
+            {summary && (
+              <Button variant="ghost" size="sm" onClick={handleCopy}>
+                {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              </Button>
+            )}
+          </div>
           {summary ? (
             <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-muted p-4 text-sm leading-7 text-foreground" dir="rtl">
               {summary}
+              {loading && <span className="inline-block w-2 h-4 bg-primary animate-pulse ml-1" />}
             </pre>
           ) : (
             <div className="mt-3 flex h-[200px] items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">
