@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { AppHeader } from "./AppHeader";
 import { LucideIcon } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ModuleLayoutProps {
   title: string;
@@ -10,8 +11,10 @@ interface ModuleLayoutProps {
 }
 
 export const ModuleLayout = ({ title, subtitle, icon: Icon, children }: ModuleLayoutProps) => {
+  const { dir } = useLanguage();
+
   return (
-    <div className="min-h-screen bg-background" dir="rtl">
+    <div className="min-h-screen bg-background" dir={dir}>
       <AppHeader />
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 flex items-center gap-3 opacity-0 animate-fade-up">
