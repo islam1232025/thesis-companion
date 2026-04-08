@@ -1,5 +1,6 @@
 import { LucideIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ModuleCardProps {
   title: string;
@@ -26,11 +27,12 @@ const borderMap = {
 
 export const ModuleCard = ({ title, description, icon: Icon, path, color, delay }: ModuleCardProps) => {
   const navigate = useNavigate();
+  const { t, dir } = useLanguage();
 
   return (
     <button
       onClick={() => navigate(path)}
-      className={`group relative flex flex-col items-start gap-4 rounded-xl border bg-card p-6 text-right shadow-[var(--card-shadow)] transition-all duration-300 hover:shadow-[var(--card-hover-shadow)] hover:-translate-y-1 ${borderMap[color]} opacity-0 animate-fade-up`}
+      className={`group relative flex flex-col items-start gap-4 rounded-xl border bg-card p-6 shadow-[var(--card-shadow)] transition-all duration-300 hover:shadow-[var(--card-hover-shadow)] hover:-translate-y-1 ${borderMap[color]} opacity-0 animate-fade-up ${dir === "rtl" ? "text-right" : "text-left"}`}
       style={{ animationDelay: `${delay}ms`, animationFillMode: "forwards" }}
     >
       <div className={`rounded-lg p-3 ${colorMap[color]} transition-transform duration-300 group-hover:scale-110`}>
@@ -41,7 +43,7 @@ export const ModuleCard = ({ title, description, icon: Icon, path, color, delay 
         <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
       </div>
       <span className="mt-auto text-xs font-medium text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        ابدأ الآن ←
+        {t("card.cta")}
       </span>
     </button>
   );

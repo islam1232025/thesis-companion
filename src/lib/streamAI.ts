@@ -3,12 +3,14 @@ const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/academic
 export async function streamAI({
   module,
   input,
+  lang = "ar",
   onDelta,
   onDone,
   onError,
 }: {
   module: "planner" | "humanizer" | "expander" | "summarizer";
   input: string;
+  lang?: "ar" | "fr";
   onDelta: (text: string) => void;
   onDone: () => void;
   onError: (msg: string) => void;
@@ -20,17 +22,17 @@ export async function streamAI({
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ module, input }),
+      body: JSON.stringify({ module, input, lang }),
     });
 
     if (!resp.ok) {
-      const err = await resp.json().catch(() => ({ error: "خطأ غير معروف" }));
-      onError(err.error || `خطأ: ${resp.status}`);
+      const err = await resp.json().catch(() => ({ error: lang === "fr" ? "Erreur inconnue" : "خطأ غير معروف" }));
+      onError(err.error || `${lang === "fr" ? "Erreur" : "خطأ"}: ${resp.status}`);
       return;
     }
 
     if (!resp.body) {
-      onError("لم يتم استلام استجابة");
+      onError(lang === "fr" ? "Aucune réponse reçue" : "لم يتم استلام استجابة");
       return;
     }
 
@@ -66,7 +68,6 @@ export async function streamAI({
       }
     }
 
-    // flush remaining
     if (buffer.trim()) {
       for (let raw of buffer.split("\n")) {
         if (!raw) continue;
@@ -84,6 +85,6 @@ export async function streamAI({
 
     onDone();
   } catch (e) {
-    onError(e instanceof Error ? e.message : "حدث خطأ في الاتصال");
+    onError(e instanceof Error ? e.message : (lang === "fr" ? "Erreur de connexion" : "حدث خطأ في الاتصال"));
   }
 }
