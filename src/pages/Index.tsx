@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { GraduationCap, BookOpen, PenTool, Expand, FileSearch, FileText, BriefcaseBusiness } from "lucide-react";
 import { ModuleCard } from "@/components/ModuleCard";
 import { AppHeader } from "@/components/AppHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const { t, dir } = useLanguage();
@@ -44,6 +46,31 @@ const Index = () => {
           ))}
         </div>
       </section>
+
+      <AccessCounter />
+    </div>
+  );
+};
+
+const AccessCounter = () => {
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    supabase
+      .from("access_counter")
+      .select("count")
+      .eq("id", 1)
+      .single()
+      .then(({ data }) => {
+        if (data) setCount(data.count);
+      });
+  }, []);
+
+  if (count === null) return null;
+
+  return (
+    <div className="pb-2 text-center">
+      <span className="text-[10px] text-muted-foreground/30 select-none">{count}</span>
     </div>
   );
 };
