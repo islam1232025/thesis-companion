@@ -22,6 +22,8 @@ export const AppHeader = () => {
             <button onClick={() => navigate("/humanizer")} className="transition-colors hover:text-foreground">{t("nav.humanizer")}</button>
             <button onClick={() => navigate("/expander")} className="transition-colors hover:text-foreground">{t("nav.expander")}</button>
             <button onClick={() => navigate("/summarizer")} className="transition-colors hover:text-foreground">{t("nav.summarizer")}</button>
+            <button onClick={() => navigate("/pdf-study")} className="transition-colors hover:text-foreground">{t("nav.pdfstudy")}</button>
+            <button onClick={() => navigate("/employability")} className="transition-colors hover:text-foreground">{t("nav.employability")}</button>
           </nav>
           <LanguageToggle />
         </div>

@@ -9,6 +9,8 @@ import PlannerPage from "./pages/PlannerPage.tsx";
 import HumanizerPage from "./pages/HumanizerPage.tsx";
 import ExpanderPage from "./pages/ExpanderPage.tsx";
 import SummarizerPage from "./pages/SummarizerPage.tsx";
+import PdfStudyPage from "./pages/PdfStudyPage.tsx";
+import EmployabilityPage from "./pages/EmployabilityPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -26,6 +28,8 @@ const App = () => (
             <Route path="/humanizer" element={<HumanizerPage />} />
             <Route path="/expander" element={<ExpanderPage />} />
             <Route path="/summarizer" element={<SummarizerPage />} />
+            <Route path="/pdf-study" element={<PdfStudyPage />} />
+            <Route path="/employability" element={<EmployabilityPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </HashRouter>
