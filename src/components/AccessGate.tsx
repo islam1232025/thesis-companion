@@ -15,19 +15,9 @@ export const useAccessGate = () => {
   const grant = async () => {
     sessionStorage.setItem(STORAGE_KEY, "true");
     setGranted(true);
-    // Increment counter
+    // Increment counter via secure function
     try {
-      const { data } = await supabase
-        .from("access_counter")
-        .select("count")
-        .eq("id", 1)
-        .single();
-      if (data) {
-        await supabase
-          .from("access_counter")
-          .update({ count: data.count + 1 })
-          .eq("id", 1);
-      }
+      await supabase.rpc("increment_access_counter");
     } catch (e) {
       console.error("Counter update failed", e);
     }
