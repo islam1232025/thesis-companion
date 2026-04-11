@@ -22,27 +22,31 @@ serve(async (req) => {
       );
     }
 
-    const SECRET_CODE = Deno.env.get("ACCESS_SECRET_CODE");
-    if (!SECRET_CODE) {
-      console.error("ACCESS_SECRET_CODE not configured");
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Verify code via database function (compares hashes, never exposes the code)
+    const { data: isValid, error: verifyError } = await supabase.rpc("verify_access_code", {
+      input_code: code.trim(),
+    });
+
+    if (verifyError) {
+      console.error("Verify error:", verifyError);
       return new Response(
-        JSON.stringify({ success: false, error: "Server misconfigured" }),
+        JSON.stringify({ success: false }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    if (code.trim() !== SECRET_CODE) {
+    if (!isValid) {
       return new Response(
         JSON.stringify({ success: false }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Code is correct — increment counter
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
+    // Code correct — increment counter
     await supabase.rpc("increment_access_counter");
 
     return new Response(

@@ -29,12 +29,28 @@ export type Database = {
         }
         Relationships: []
       }
+      app_config: {
+        Row: {
+          key: string
+          value: string
+        }
+        Insert: {
+          key: string
+          value: string
+        }
+        Update: {
+          key?: string
+          value?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
       increment_access_counter: { Args: never; Returns: undefined }
+      verify_access_code: { Args: { input_code: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
