@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Lock, Loader2 } from "lucide-react";
+import { Lock, Loader2, GraduationCap } from "lucide-react";
 
 const STORAGE_KEY = "academia_access_granted";
 
@@ -66,38 +66,61 @@ export const AccessGate = ({ onGranted }: AccessGateProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
-      <div className={`w-full max-w-sm space-y-6 text-center ${shake ? "animate-shake" : ""}`}>
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
-          <Lock className="h-8 w-8 text-primary" />
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center px-4">
+      {/* Decorative background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-primary/5 blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-secondary/5 blur-3xl" />
+      </div>
+
+      <div className={`relative w-full max-w-sm space-y-8 text-center ${shake ? "animate-shake" : ""}`}>
+        {/* Logo */}
+        <div className="space-y-6">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-primary to-primary/80 shadow-xl shadow-primary/25">
+            <GraduationCap className="h-10 w-10 text-primary-foreground" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold text-foreground">أكاديميا</h1>
+            <p className="text-base text-muted-foreground">Académia</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">أكاديميا | Académia</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            أدخل رمز الوصول للمتابعة / Entrez le code d'accès
+
+        {/* Form */}
+        <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-lg space-y-5">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+            <Lock className="h-5 w-5 text-primary" />
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            أدخل رمز الوصول للمتابعة
+            <br />
+            <span className="text-xs">Entrez le code d'accès pour continuer</span>
           </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              type="password"
+              value={code}
+              onChange={(e) => {
+                setCode(e.target.value);
+                setError(false);
+              }}
+              placeholder="••••••••"
+              className={`text-center text-lg h-12 rounded-xl ${error ? "border-destructive ring-1 ring-destructive/30" : ""}`}
+              autoFocus
+              disabled={loading}
+            />
+            {error && (
+              <p className="text-sm text-destructive font-medium">رمز غير صحيح / Code incorrect</p>
+            )}
+            <Button
+              type="submit"
+              className="w-full h-11 rounded-xl font-semibold text-sm"
+              disabled={loading || !code.trim()}
+            >
+              {loading ? <Loader2 className="h-4 w-4 animate-spin ltr:mr-2 rtl:ml-2" /> : null}
+              {loading ? "جاري التحقق..." : "دخول / Entrer"}
+            </Button>
+          </form>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            type="password"
-            value={code}
-            onChange={(e) => {
-              setCode(e.target.value);
-              setError(false);
-            }}
-            placeholder="رمز الوصول / Code d'accès"
-            className={`text-center text-lg ${error ? "border-destructive" : ""}`}
-            autoFocus
-            disabled={loading}
-          />
-          {error && (
-            <p className="text-sm text-destructive">رمز غير صحيح / Code incorrect</p>
-          )}
-          <Button type="submit" className="w-full" disabled={loading || !code.trim()}>
-            {loading ? <Loader2 className="h-4 w-4 animate-spin ltr:mr-2 rtl:ml-2" /> : null}
-            {loading ? "جاري التحقق..." : "دخول / Entrer"}
-          </Button>
-        </form>
       </div>
     </div>
   );
