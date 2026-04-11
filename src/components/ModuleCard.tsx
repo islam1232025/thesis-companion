@@ -12,17 +12,17 @@ interface ModuleCardProps {
 }
 
 const colorMap = {
-  primary: "bg-primary/10 text-primary",
-  secondary: "bg-secondary/10 text-secondary",
-  accent: "bg-accent/10 text-accent",
-  destructive: "bg-destructive/10 text-destructive",
+  primary: "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground",
+  secondary: "bg-secondary/10 text-secondary group-hover:bg-secondary group-hover:text-secondary-foreground",
+  accent: "bg-accent/10 text-accent group-hover:bg-accent group-hover:text-accent-foreground",
+  destructive: "bg-destructive/10 text-destructive group-hover:bg-destructive group-hover:text-destructive-foreground",
 };
 
-const borderMap = {
-  primary: "hover:border-primary/40",
-  secondary: "hover:border-secondary/40",
-  accent: "hover:border-accent/40",
-  destructive: "hover:border-destructive/40",
+const glowMap = {
+  primary: "group-hover:shadow-primary/20",
+  secondary: "group-hover:shadow-secondary/20",
+  accent: "group-hover:shadow-accent/20",
+  destructive: "group-hover:shadow-destructive/20",
 };
 
 export const ModuleCard = ({ title, description, icon: Icon, path, color, delay }: ModuleCardProps) => {
@@ -32,17 +32,17 @@ export const ModuleCard = ({ title, description, icon: Icon, path, color, delay 
   return (
     <button
       onClick={() => navigate(path)}
-      className={`group relative flex flex-col items-start gap-4 rounded-xl border bg-card p-6 shadow-[var(--card-shadow)] transition-all duration-300 hover:shadow-[var(--card-hover-shadow)] hover:-translate-y-1 ${borderMap[color]} opacity-0 animate-fade-up ${dir === "rtl" ? "text-right" : "text-left"}`}
+      className={`group relative flex flex-col items-start gap-4 rounded-2xl border border-border/60 bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 ${glowMap[color]} opacity-0 animate-fade-up ${dir === "rtl" ? "text-right" : "text-left"}`}
       style={{ animationDelay: `${delay}ms`, animationFillMode: "forwards" }}
     >
-      <div className={`rounded-lg p-3 ${colorMap[color]} transition-transform duration-300 group-hover:scale-110`}>
+      <div className={`rounded-xl p-3 ${colorMap[color]} transition-all duration-300`}>
         <Icon className="h-6 w-6" />
       </div>
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold text-card-foreground">{title}</h3>
-        <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
+        <h3 className="text-lg font-bold text-card-foreground">{title}</h3>
+        <p className="text-sm leading-relaxed text-muted-foreground line-clamp-3">{description}</p>
       </div>
-      <span className="mt-auto text-xs font-medium text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+      <span className="mt-auto inline-flex items-center gap-1 text-xs font-semibold text-primary opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
         {t("card.cta")}
       </span>
     </button>

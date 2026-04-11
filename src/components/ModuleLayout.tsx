@@ -16,14 +16,14 @@ export const ModuleLayout = ({ title, subtitle, icon: Icon, children }: ModuleLa
   return (
     <div className="min-h-screen bg-background" dir={dir}>
       <AppHeader />
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex items-center gap-3 opacity-0 animate-fade-up">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+      <main className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="mb-6 sm:mb-8 flex items-center gap-3 opacity-0 animate-fade-up">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10">
             <Icon className="h-6 w-6 text-primary" />
           </div>
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">{title}</h1>
-            <p className="text-sm text-muted-foreground">{subtitle}</p>
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground truncate">{title}</h1>
+            <p className="text-xs sm:text-sm text-muted-foreground truncate">{subtitle}</p>
           </div>
         </div>
         {children}
