@@ -31,6 +31,8 @@ serve(async (req) => {
       );
     }
 
+    console.log("Code length:", code.trim().length, "Secret length:", SECRET_CODE.length, "Match:", code.trim() === SECRET_CODE);
+
     if (code.trim() !== SECRET_CODE) {
       return new Response(
         JSON.stringify({ success: false }),
