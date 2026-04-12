@@ -8,7 +8,7 @@ export async function streamAI({
   onDone,
   onError,
 }: {
-  module: "planner" | "humanizer" | "expander" | "summarizer" | "pdfstudy" | "employability";
+  module: "planner" | "humanizer" | "expander" | "summarizer" | "pdfstudy" | "employability" | "thesisreview";
   input: string;
   lang?: "ar" | "fr";
   onDelta: (text: string) => void;

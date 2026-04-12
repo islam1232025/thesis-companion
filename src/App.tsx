@@ -12,6 +12,7 @@ import ExpanderPage from "./pages/ExpanderPage.tsx";
 import SummarizerPage from "./pages/SummarizerPage.tsx";
 import PdfStudyPage from "./pages/PdfStudyPage.tsx";
 import EmployabilityPage from "./pages/EmployabilityPage.tsx";
+import ThesisReviewPage from "./pages/ThesisReviewPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const AppContent = () => {
         <Route path="/summarizer" element={<SummarizerPage />} />
         <Route path="/pdf-study" element={<PdfStudyPage />} />
         <Route path="/employability" element={<EmployabilityPage />} />
+        <Route path="/thesis-review" element={<ThesisReviewPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>
