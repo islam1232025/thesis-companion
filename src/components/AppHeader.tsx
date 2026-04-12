@@ -12,6 +12,8 @@ const navItems = [
   { key: "nav.summarizer", path: "/summarizer" },
   { key: "nav.pdfstudy", path: "/pdf-study" },
   { key: "nav.employability", path: "/employability" },
+  { key: "nav.thesisreview", path: "/thesis-review" },
+  { key: "nav.academicchat", path: "/academic-chat" },
 ];
 
 export const AppHeader = () => {

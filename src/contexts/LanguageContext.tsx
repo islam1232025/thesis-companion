@@ -143,6 +143,21 @@ const translations: Record<string, Record<Lang, string>> = {
   "summarizer.resultLabel": { ar: "الملخص والمراجع", fr: "Résumé et références" },
   "summarizer.resultEmpty": { ar: "سيظهر الملخص والمراجع هنا", fr: "Le résumé et les références apparaîtront ici" },
 
+  // Academic Chat
+  "academicchat.title": { ar: "المحاور الأكاديمي", fr: "Dialogueur Académique" },
+  "academicchat.desc": {
+    ar: "ناقش أفكار مذكرتك مع أستاذ ذكي يتتبع سياق حوارك ويقدم نقداً بنّاءً ومقترحات منهجية مع دعم ملفات PDF.",
+    fr: "Discutez de vos idées de mémoire avec un professeur intelligent qui suit le contexte de votre dialogue et offre des critiques constructives et des suggestions méthodologiques avec support PDF.",
+  },
+  "academicchat.subtitle": { ar: "ناقش أفكارك الأكاديمية مع محاور ذكي يتتبع سياق حوارك", fr: "Discutez de vos idées académiques avec un interlocuteur intelligent qui suit le contexte" },
+  "academicchat.placeholder": { ar: "ابدأ محادثة أكاديمية... اطرح فكرة مذكرتك أو ارفق ملف PDF للنقاش", fr: "Commencez une discussion académique... proposez une idée de mémoire ou joignez un PDF" },
+  "academicchat.inputPlaceholder": { ar: "اكتب رسالتك هنا...", fr: "Écrivez votre message ici..." },
+  "academicchat.invalidFile": { ar: "يرجى رفع ملف PDF فقط", fr: "Veuillez télécharger un fichier PDF uniquement" },
+  "academicchat.emptyPdf": { ar: "الملف فارغ أو لا يمكن قراءته", fr: "Le fichier est vide ou illisible" },
+  "academicchat.extractError": { ar: "حدث خطأ أثناء قراءة الملف", fr: "Erreur lors de la lecture du fichier" },
+  "academicchat.extracting": { ar: "جارٍ استخراج النص من الملف...", fr: "Extraction du texte en cours..." },
+  "nav.academicchat": { ar: "المحاور الذكي", fr: "Dialogueur IA" },
+
   // Common
   "error.title": { ar: "خطأ", fr: "Erreur" },
 };
