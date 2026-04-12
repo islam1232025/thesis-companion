@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Send, Paperclip, Trash2, FileText, Loader2, Bot, User } from "lucide-react";
+import { Send, Paperclip, Trash2, FileText, Loader2, Bot, User, MessageSquare } from "lucide-react";
 import { ModuleLayout } from "@/components/ModuleLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
@@ -192,7 +192,7 @@ const AcademicChatPage = () => {
   };
 
   return (
-    <ModuleLayout titleKey="academicchat.title" subtitleKey="academicchat.subtitle">
+    <ModuleLayout title={t("academicchat.title")} subtitle={t("academicchat.subtitle")} icon={MessageSquare}>
       <div className="flex flex-col h-[calc(100vh-220px)] max-h-[700px] bg-card rounded-2xl border border-border/60 overflow-hidden shadow-sm">
         {/* Messages Area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4" dir={dir}>
