@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GraduationCap, BookOpen, PenTool, Expand, FileSearch, FileText, BriefcaseBusiness, Sparkles } from "lucide-react";
+import { GraduationCap, BookOpen, PenTool, Expand, FileSearch, FileText, BriefcaseBusiness, ClipboardCheck, Sparkles } from "lucide-react";
 import { ModuleCard } from "@/components/ModuleCard";
 import { AppHeader } from "@/components/AppHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -15,6 +15,7 @@ const Index = () => {
     { titleKey: "summarizer.title", descKey: "summarizer.desc", icon: FileSearch, path: "/summarizer", color: "destructive" as const },
     { titleKey: "pdfstudy.title", descKey: "pdfstudy.desc", icon: FileText, path: "/pdf-study", color: "primary" as const },
     { titleKey: "employability.title", descKey: "employability.desc", icon: BriefcaseBusiness, path: "/employability", color: "secondary" as const },
+    { titleKey: "thesisreview.title", descKey: "thesisreview.desc", icon: ClipboardCheck, path: "/thesis-review", color: "accent" as const },
   ];
 
   return (

@@ -84,6 +84,23 @@ const translations: Record<string, Record<Lang, string>> = {
 
   "nav.pdfstudy": { ar: "دراسة PDF", fr: "Étude PDF" },
   "nav.employability": { ar: "قابلية التوظيف", fr: "Employabilité" },
+  "nav.thesisreview": { ar: "نقد المذكرة", fr: "Critique du mémoire" },
+
+  "thesisreview.title": { ar: "نقد وتحليل المذكرة", fr: "Critique et analyse du mémoire" },
+  "thesisreview.desc": {
+    ar: "ارفع ملف PDF لمذكرة تخرجك واحصل على تقرير نقدي شامل يتضمن تحليل العنوان، نقد الهيكلية، مؤشر التماسك، ونقاط القوة والضعف مع اقتراحات التحسين.",
+    fr: "Téléchargez le PDF de votre mémoire et obtenez un rapport critique complet incluant l'analyse du titre, la critique structurelle, le score de cohésion, les forces et faiblesses avec des suggestions d'amélioration.",
+  },
+  "thesisreview.subtitle": { ar: "احصل على تقرير نقدي وهيكلي شامل لمذكرة تخرجك", fr: "Obtenez un rapport critique et structurel complet de votre mémoire" },
+  "thesisreview.inputLabel": { ar: "رفع ملف المذكرة (PDF)", fr: "Télécharger le mémoire (PDF)" },
+  "thesisreview.uploadHint": { ar: "اضغط هنا لرفع ملف PDF لمذكرة التخرج", fr: "Cliquez ici pour télécharger le PDF du mémoire" },
+  "thesisreview.extracting": { ar: "جارٍ استخراج النص من المذكرة...", fr: "Extraction du texte du mémoire..." },
+  "thesisreview.generating": { ar: "جارٍ التحليل النقدي والهيكلي...", fr: "Analyse critique et structurelle en cours..." },
+  "thesisreview.resultLabel": { ar: "التقرير النقدي", fr: "Rapport critique" },
+  "thesisreview.resultEmpty": { ar: "سيظهر التقرير النقدي هنا بعد رفع ملف المذكرة", fr: "Le rapport critique apparaîtra ici après le téléchargement du mémoire" },
+  "thesisreview.invalidFile": { ar: "يرجى رفع ملف PDF فقط", fr: "Veuillez télécharger un fichier PDF uniquement" },
+  "thesisreview.emptyPdf": { ar: "الملف فارغ أو لا يمكن قراءته", fr: "Le fichier est vide ou illisible" },
+  "thesisreview.extractError": { ar: "حدث خطأ أثناء قراءة الملف", fr: "Erreur lors de la lecture du fichier" },
 
   "card.cta": { ar: "ابدأ الآن ←", fr: "Commencer →" },
 
